@@ -16,7 +16,7 @@ session_start();
 		echo "Conexion exitosa";
 		echo '<META HTTP-EQUIV="REFRESH" CONTENT="5;URL=index.php">';
 	}else{
-		echo "Morro pdjo";
+		echo "No se pudo conectar";
 		echo '<META HTTP-EQUIV="REFRESH" CONTENT="5;URL=index.php">';
 		}	
 	}

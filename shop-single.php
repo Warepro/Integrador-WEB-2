@@ -1,3 +1,15 @@
+<?php
+include('./recibir.php');
+if(isset($_GET['id'])){
+ $resultado = $conexion ->query('select * from productos where id='.$_GET['id'])or die($conexion -> error);
+ if(mysqli_num_rows($resultado) >0 ){
+   
+ }
+}else{
+  header("Location : ./index.php");
+  
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -107,11 +119,11 @@
     <div class="site-section">
       <div class="container">
         <div class="row">
-          <div class="col-md-6">
-            <img src="images/cloth_1.jpg" alt="Image" class="img-fluid">
+          <div class="col-md-6"> 
+          <img src="images/<?php echo $fila[4]?>" alt="<?php echo $fila[1]?>" class="img-fluid">
           </div>
           <div class="col-md-6">
-            <h2 class="text-black">Camiseta sin mangas</h2>
+          <h2 class="text-black"><?php echo $fila[1]?></h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur, vitae, explicabo? Incidunt facere, natus soluta dolores iusto! Molestiae expedita veritatis nesciunt doloremque sint asperiores fuga voluptas, distinctio, aperiam, ratione dolore.</p>
             <p class="mb-4">Ex numquam veritatis debitis minima quo error quam eos dolorum quidem perferendis. Quos repellat dignissimos minus, eveniet nam voluptatibus molestias omnis reiciendis perspiciatis illum hic magni iste, velit aperiam quis.</p>
             <p><strong class="text-primary h4">$50.00</strong></p>
@@ -141,7 +153,7 @@
             </div>
 
             </div>
-            <p><a href="cart.php" class="buy-now btn btn-sm btn-primary">Añadir al carrito</a></p>
+            <p><a href="cart.php?id=<?php echo $fila[0]?>" class="buy-now btn btn-sm btn-primary">Añadir al carrito</a></p>
 
           </div>
         </div>
@@ -156,72 +168,26 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12">
-            <div class="nonloop-block-3 owl-carousel">
-              <div class="item">
-                <div class="block-4 text-center">
+        <?php
+            include('./recibir.php');
+            $resultado = $conexion ->query("select * from productos order by id DESC")or die($conexion -> error);
+        while($fila = mysqli_fetch_array($resultado)){
+            ?>
+              <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
+                <div class="block-4 text-center border">
                   <figure class="block-4-image">
-                    <img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid">
+                    <a href="shop-single.php?id=<?php echo $fila['id'];?>">
+                    <img src="images/<?php echo $fila['imagen'];?>" alt="<?php echo $fila['nombre'];?>" class="img-fluid"></a>
                   </figure>
                   <div class="block-4-text p-4">
-                    <h3><a href="#">Camiseta sin mangas</a></h3>
-                    <p class="mb-0">Encontrar la camiseta perfecta</p>
-                    <p class="text-primary font-weight-bold">$50</p>
+                    <h3><a href="shop-single.php"><?php echo $fila['nombre'];?> </a></h3>
+                    <p class="mb-0"><?php echo $fila['descripcion'];?></p>
+                    <p class="text-primary font-weight-bold"><?php echo $fila['precio'];?></p>
                   </div>
                 </div>
               </div>
-              <div class="item">
-                <div class="block-4 text-center">
-                  <figure class="block-4-image">
-                    <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="#">Corater</a></h3>
-                    <p class="mb-0">Encontrar productos perfectos</p>
-                    <p class="text-primary font-weight-bold">$50</p>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="block-4 text-center">
-                  <figure class="block-4-image">
-                    <img src="images/cloth_2.jpg" alt="Image placeholder" class="img-fluid">
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="#">Camisa polo</a></h3>
-                    <p class="mb-0">Encontrar productos perfectos</p>
-                    <p class="text-primary font-weight-bold">$50</p>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="block-4 text-center">
-                  <figure class="block-4-image">
-                    <img src="images/cloth_3.jpg" alt="Image placeholder" class="img-fluid">
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="#">Maqueta de camiseta</a></h3>
-                    <p class="mb-0">Encontrar productos perfectos</p>
-                    <p class="text-primary font-weight-bold">$50</p>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="block-4 text-center">
-                  <figure class="block-4-image">
-                    <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="#">Corater</a></h3>
-                    <p class="mb-0">Encontrar productos perfectos</p>
-                    <p class="text-primary font-weight-bold">$50</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+            <?php } ?>
+            
     </div>
 
     <footer class="site-footer border-top">
